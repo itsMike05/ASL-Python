@@ -2,6 +2,7 @@ import cv2
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 import math
+import time
 
 # Initializing the capture object and the hand detector
 cap = cv2.VideoCapture(0)
@@ -10,6 +11,11 @@ detector = HandDetector(maxHands=1)
 # Cropping offset and blank image size
 crop_offset = 15
 imgSize = 300
+
+# Data folder location
+data_folder = "Data/A"
+data_counter = 0
+
 # Displaying the camera output
 while True:
     success, img = cap.read()
@@ -38,10 +44,16 @@ while True:
             heightGap = math.ceil((imgSize - heightCal) / 2)
             imgWhite[heightGap: heightCal + heightGap, :] = imgResize
 
-
         cv2.imshow("Img Crop", imgCrop)
         cv2.imshow("Img White", imgWhite)
         cv2.waitKey(30)
 
     cv2.imshow("ASL", img)
-    cv2.waitKey(1)
+    key = cv2.waitKey(1)
+    if key == ord("s"):
+        data_counter += 1
+        try:
+            cv2.imwrite(f"{data_folder}/Image_{time.time()}.jpg", imgWhite)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        print(f"Images taken: {data_counter}")
