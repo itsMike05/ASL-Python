@@ -13,7 +13,7 @@ crop_offset = 15
 imgSize = 300
 
 # Data folder location
-data_folder = "Data/A"
+data_folder = "Data/F"
 data_counter = 0
 
 # Displaying the camera output
